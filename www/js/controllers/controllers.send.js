@@ -282,10 +282,6 @@
             UIHelper.showAlert('"' + $scope.paymentData.currency + '" ' + t.get(1));
         else if($scope.paymentData.currency == 'XLM' && $scope.paymentData.amount > account.balance)
             UIHelper.showAlert('controllers.send.validate.amount.funds');
-        /*else if ($scope.paymentData.currency != 'XLM')
-            UIHelper.showAlert('Assets other than XLM are not supported yet, but coming soon.');
-        else if ($scope.paymentData.currency != 'XLM' && context.alternatives.length == 0)
-            UIHelper.showAlert('controllers.send.validate.path');*/
         else if (context.amount == null)
             UIHelper.showAlert('controllers.send.validate.general');
         else if (context.alternatives.length > 1) {
