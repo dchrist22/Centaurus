@@ -195,24 +195,24 @@
             else {
                 var asset = StellarSdk.Asset.native();
 
-		if ($scope.paymentData.currency != 'XLM') {
-		    var issuer = '';
+                if ($scope.paymentData.currency != 'XLM') {
+                    var issuer = '';
 
-		    for(i=0; i<$scope.destinationInfo.acceptedIOUs.length; i++)
+                    for(i=0; i<$scope.destinationInfo.acceptedIOUs.length; i++)
                     {
-			var iou = $scope.destinationInfo.acceptedIOUs[i];
-			if(iou.currency === $scope.paymentData.currency){
-			    issuer = iou.issuer;
+                        var iou = $scope.destinationInfo.acceptedIOUs[i];
+                        if(iou.currency === $scope.paymentData.currency){
+                            issuer = iou.issuer;
                             break;
-			}
+                        }
                     }
                     asset = new StellarSdk.Asset($scope.paymentData.currency, issuer);
-		}
+                }
 
-		operation = StellarSdk.Operation.payment({
-			destination: $scope.paymentData.destinationAddress,
-			asset: asset,
-			amount: context.amount.toString()
+                operation = StellarSdk.Operation.payment({
+                        destination: $scope.paymentData.destinationAddress,
+                        asset: asset,
+                        amount: context.amount.toString()
                 });
             }
             return operation;
