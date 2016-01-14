@@ -1,0 +1,10 @@
+<ion-popover-view style="height: {{(60 * popoverSourceItemCount) + 'px'}};">
+    <ion-content>
+        <ion-radio ng-repeat="currency in sourceInfo.acceptedCurrencies" class="item"
+                   ng-model="paymentData.source_currency"
+                   ng-value="currency"
+                   on-tap="sourceCurrencyPopover.hide()">
+            {{currency}}
+        </ion-radio>
+    </ion-content>
+</ion-popover-view>

@@ -5,15 +5,28 @@
     </label>
     <div class="row no-padding">
       <label class="item item-input" style="width:80%">
-        <input ng-model="paymentData.amount" placeholder="0" type="number" />
+        <input ng-model="paymentData.source_amount" placeholder="0" type="number" />
       </label>
-      <label class="item align-right" ng-if="destinationInfo.acceptedCurrencies.length > 1" style="width:22%; padding:12px">
-        <a href="javascript:void(0)" on-tap="currencyPopover.show($event);">
-              {{paymentData.currency}}
+      <label class="item align-right" ng-if="sourceInfo.acceptedCurrencies.length > 1" style="width:22%; padding:12px">
+        <a href="javascript:void(0)" on-tap="sourceCurrencyPopover.show($event);">
+              {{paymentData.source_currency}}
+          </a>
+      </label>
+      <label class="item align-right" ng-if="sourceInfo.acceptedCurrencies.length == 1" style="width:22%; padding:12px">
+        {{paymentData.source_currency}}
+      </label>
+    </div>
+    <div class="row no-padding">
+      <label class="item item-input" style="width:80%">
+        <input ng-model="paymentData.dest_amount" placeholder="0" type="number" />
+      </label>
+      <label class="item align-right" ng-if="destinationInfo.acceptedCurrencies.length > 1" style="width:22%; padding:12px" >
+        <a href="javascript:void(0)" on-tap="destCurrencyPopover.show($event);">
+              {{paymentData.dest_currency}}
           </a>
       </label>
       <label class="item align-right" ng-if="destinationInfo.acceptedCurrencies.length == 1" style="width:22%; padding:12px">
-        {{paymentData.currency}}
+        {{paymentData.dest_currency}}
       </label>
     </div>
     <label class="item item-input" ng-if="showDestinationTag">
@@ -34,3 +47,4 @@
     </div>
   </ion-content>
 </ion-view>
+<!--ng-disabled="paymentData.source_currency == 'XLM'"--> 

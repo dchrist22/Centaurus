@@ -1,0 +1,12 @@
+<ion-popover-view style="height: {{(60 * popoverDestItemCount) + 'px'}};">
+    <ion-content>
+        <ion-radio ng-repeat="currency in destinationInfo.acceptedCurrencies" class="item"
+                   ng-model="paymentData.dest_currency"
+                   ng-value="currency"
+		   
+                   on-tap="destCurrencyPopover.hide()">
+            {{currency}}
+        </ion-radio>
+    </ion-content>
+</ion-popover-view>
+<!--ng-disabled="paymentData.source_currency == 'XLM'"-->

@@ -19,7 +19,7 @@ angular.module('starter.services', ['starter.services.basic'])
 
 	resetAccount();
 
-	var addToBalance = function (currency, amount) {
+	var addToBalance = function (currency, amount, issuer) {
 	    if (currency === 'native' || currency === 'XLM' || currency == null) {
 	        account.balance += amount;
 	        return;
@@ -33,7 +33,7 @@ angular.module('starter.services', ['starter.services.basic'])
             }
         }
         // no entry for currency exists -> add new entry
-        account.otherCurrencies.push({currency:currency, amount:amount});             
+        account.otherCurrencies.push({currency:currency, amount:amount, issuer:issuer});
     };
 	
 	var attachToKeys = function () {
@@ -49,7 +49,7 @@ angular.module('starter.services', ['starter.services.basic'])
             console.log(JSON.stringify(acc));
             for (i = 0; i < acc.balances.length; i++){
                 var bal = acc.balances[i];
-                addToBalance(bal.asset_code, parseFloat(bal.balance));
+                addToBalance(bal.asset_code, parseFloat(bal.balance), bal.asset_issuer);
             }
             account.sequence = acc.sequence;
             $rootScope.$broadcast('accountInfoLoaded');
