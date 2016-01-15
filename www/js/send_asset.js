@@ -21,14 +21,19 @@ var issuer1_public  = 'GA2J3BILCA6OV2FPARK7LCDN22L6KUVGJVCESHJLXC6VGRZASCOODBFK'
 var issuer2_private = 'SCFIAOUQCUIMOGG7LUUQTIK6QQEMQP2Q23MQN2KEG7BV3VEE5L5EFYH6';
 var issuer2_public  = 'GAHY2RGQEV5FGPNAT3PUWENQXZU3NAPPWFZ23HHMLRFT453IJEGMGBPA';
 
+var issuer3_private = 'SBKP5O27DOA76DZUQTJ4IEDVTCBBJVUPY4QZKHYEUHDQDZSCT3JH6MA4';
+var issuer3_public  = 'GC7S62HVAN2EWVGHLZ43AR6KD3AXVS6E7U2JVK3DHDWBLEHZ5STELIJS';
+
 var source_keypair  = StellarSdk.Keypair.fromSeed(source_private);
 var dest1_keypair   = StellarSdk.Keypair.fromSeed(dest1_private);
 var dest2_keypair   = StellarSdk.Keypair.fromSeed(dest2_private);
 var issuer1_keypair = StellarSdk.Keypair.fromSeed(issuer1_private);
 var issuer2_keypair = StellarSdk.Keypair.fromSeed(issuer2_private);
+var issuer3_keypair = StellarSdk.Keypair.fromSeed(issuer3_private);
 
 var usd_asset = new StellarSdk.Asset('USD', issuer1_public);
 var eur_asset = new StellarSdk.Asset('EUR', issuer2_public);
+var dan_asset = new StellarSdk.Asset('Daniel_Coins', issuer3_public);
 var xlm_asset = new StellarSdk.Asset.native();
 
 
@@ -62,7 +67,8 @@ function send_transaction(account_public, account_keypair, operation) {
 
 var changeOffers = !true; var deleteOffers = !true;
 var showOffers = !true;
-var paths = true;
+var changeTrust = true;
+var paths = !true;
 var send = !true;
 
 if (changeOffers) { 
@@ -111,21 +117,37 @@ if (changeOffers) {
     }
 }
 if (showOffers) {
+    server.orderbook(new StellarSdk.Asset("FOO","GBAUUA74H4XOQYRSOW2RZUA4QL5PB37U3JS5NE3RTB2ELJVMIF5RLMAG"), xlm_asset).call()
+        .then(function (response) {
+            console.log(JSON.stringify(response));
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+    
+/*    server.orderbook(xlm_asset, new StellarSdk.Asset("CNY","GAZWSWPDQTBHFIPBY4FEDFW2J6E2LE7SZHJWGDZO6Q63W7DBSRICO2KN")).call()
+        .then(function (response) {
+            console.log(JSON.stringify(response));
+        })
+        .catch(function (err) {
+            console.log(err);
+        });*/
+/*
     server.orderbook(xlm_asset, usd_asset).call()
         .then(function (response) {
             console.log(JSON.stringify(response));
         })
         .catch(function (err) {
             console.log(err);
-        });
+        });*/
 
-    server.orderbook(eur_asset, usd_asset).call()
+/*    server.orderbook(eur_asset, usd_asset).call()
         .then(function (response) {
             console.log(JSON.stringify(response));
         })
         .catch(function (err) {
             console.log(err);
-        });
+        });*/
 }
 
 var path = [];
@@ -158,7 +180,7 @@ if (paths) {
 
 if (send) {
 
-    console.log("wait");    
+    /*console.log("wait");    
     function x() {
         console.log("chosen path: ");
         console.log(path);
@@ -175,7 +197,23 @@ if (send) {
                          })
                         );
     }
-    setTimeout(x, 3000);
+    setTimeout(x, 3000);*/
+
+    send_transaction(issuer1_public, issuer1_keypair,
+                         StellarSdk.Operation.payment({
+                             destination: source_public,
+                             asset: usd_asset,
+                             amount: "5"
+                         })
+                        );
+}
+
+if (changeTrust) {
+    send_transaction(source_public, source_keypair,
+                     StellarSdk.Operation.changeTrust({
+                         asset: dan_asset
+                     })
+                    );
 }
 
 console.log('end');
